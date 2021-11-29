@@ -39,6 +39,7 @@ pageCategories.close()
 
 print("Querying Wikipedia...")
 
+curDepth = -1
 
 try:
     while len(pagesQueue) > 0:
@@ -46,6 +47,11 @@ try:
         if (maxDepth > -1 and pageDepth > maxDepth):
             print("Max breadth depth reached!")
             break
+        
+        if (pageDepth > curDepth):
+            curDepth += 1
+            print("Current Depth:",curDepth)
+        
         pageEdges = []
         page = pywikibot.Page(site, pageName)
         pages = page.linkedPages()
