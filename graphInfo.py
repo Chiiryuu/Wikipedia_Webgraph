@@ -76,8 +76,6 @@ print('Loading complete!')
 
 print("Nodes: {},   Edges: {}".format(len(G.nodes()), len(G.edges())))   
 
-print("Connected components: {}".format(nx.number_connected_components(G)))
-
 exit(-1)
 
 '''
