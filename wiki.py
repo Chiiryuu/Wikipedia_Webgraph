@@ -54,6 +54,9 @@ try:
             print("Current Depth:",curDepth)
         
         pageEdges = []
+        
+        # All page links, not just those in text
+        '''
         page = pywikibot.Page(site, pageName)
         pages = page.linkedPages()
         
@@ -70,6 +73,31 @@ try:
             newPage = relatedPage.title()
             if (':' in newPage):
                 continue
+            if not newPage in knownPages:
+                knownPages.append(newPage)
+                pagesQueue.append((newPage,pageDepth+1))
+            graph.write("{}:{}:{}\n".format(pageName,newPage, pageDepth+1))
+        graph.close()
+        '''
+        
+        # Updated version to just follow in-text links
+        page = pywikibot.Page(site, pageName)
+        pages = pywikibot.link_regex.finditer(textlib.removeDisabledParts(page.text))
+        
+        pageCategories = open("categories-"+filePath, 'a')
+        categories = page.categories()
+        categoryString = "{}:".format(pageName)
+        for category in categories:
+            categoryString+="{},".format(str(category).replace(',','')[14:-2])
+        pageCategories.write(categoryString[:-1]+'\n')
+        pageCategories.close()
+
+        for linkmatch in pageLinks:
+            newPage = linkmatch.group('title')
+            if (':' in newPage):
+                continue
+            if '#' in newPage:
+                newPage = newPage[:newPage.index('#')]
             if not newPage in knownPages:
                 knownPages.append(newPage)
                 pagesQueue.append((newPage,pageDepth+1))
