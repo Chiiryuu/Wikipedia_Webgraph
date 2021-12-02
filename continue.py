@@ -1,4 +1,5 @@
 import pywikibot
+from pywikibot import textlib
 import json
 import sys
 
@@ -95,7 +96,8 @@ try:
         pageCategories.write(categoryString[:-1]+'\n')
         pageCategories.close()
 
-        for linkmatch in pageLinks:
+        graph = open(filePath, 'a')
+        for linkmatch in pages:
             newPage = linkmatch.group('title')
             if (':' in newPage):
                 continue
