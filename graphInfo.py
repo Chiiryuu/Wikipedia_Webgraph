@@ -64,7 +64,7 @@ print('Loading graph file {}...'.format(graphFile))
 
 rawGraph = open(graphFile, "r")
 next(rawGraph, None)
-Graphtype = nx.Graph()
+Graphtype = nx.DiGraph()
 
 print('Converting graph file to Networkx Graph...')
 
