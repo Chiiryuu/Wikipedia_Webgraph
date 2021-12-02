@@ -96,6 +96,7 @@ try:
         pageCategories.write(categoryString[:-1]+'\n')
         pageCategories.close()
 
+
         graph = open(filePath, 'a')
         for linkmatch in pages:
             newPage = linkmatch.group('title')
@@ -103,7 +104,7 @@ try:
                 continue
             if '#' in newPage:
                 newPage = newPage[:newPage.index('#')]
-            if not newPage in knownPages:
+            if not newPage in knownPages and len(newPage) > 0:
                 knownPages.append(newPage)
                 pagesQueue.append((newPage,pageDepth+1))
             graph.write("{}:{}:{}\n".format(pageName,newPage, pageDepth+1))
