@@ -13,7 +13,12 @@ def printShortestPath(G, start, end):
     if not end in nodes:
         print("ERROR: node '{}' is not in graph!".format(end))
         return
-    path = nx.shortest_path(G, start, end)
+    path = None
+    try:
+        path = nx.shortest_path(G, start, end)
+    except nx.exception.NetworkXNoPath:
+        print("No path fround between {} and {}.".format(start,end))
+        return
     pathString = ' -> '.join(path)
     print("Shortest Path: {}\nPath length: {}".format(pathString,len(path)))
     return
@@ -34,7 +39,7 @@ print('Loading graph file {}...'.format(graphFile))
 
 rawGraph = open(graphFile, "r")
 next(rawGraph, None)
-Graphtype = nx.Graph()
+Graphtype = nx.DiGraph()
 
 print('Converting graph file to Networkx Graph...')
 
@@ -52,5 +57,5 @@ try:
         start = input("Enter starting page: ")
         end = input("Enter ending page: ")
         printShortestPath(G,start, end)
-except:
-    print("Program closing. Thanks for playing!")
+except exception as e:
+    print("Program closing. Thanks for playing!\n",e)
