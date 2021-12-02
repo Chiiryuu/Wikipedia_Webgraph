@@ -12,7 +12,7 @@ nodeDictionary = {}
 args = sys.argv[1:]
 
 if len(args) < 3:
-    print('Usage: python .\wiki {Output File Path} "{Starting Page Name}", {Maximum depth (-1 for no limit)}\nHalt process and save with Ctrl+C.')
+    print('Usage: python wiki.py {Output File Path} "{Starting Page Name}", {Maximum depth (-1 for no limit)}\nHalt process and save with Ctrl+C.')
     exit(-1)
 
 filePath = args[0]
@@ -23,7 +23,7 @@ try:
     maxDepth = int(maxDepth)
 except:
     print("Invalid depth given.")
-    print('Usage: python .\wiki {Output File Path} "{Starting Page Name}", {Maximum depth (-1 for no limit)}\nHalt process and save cut Ctrl+C.')
+    print('Usage: python wiki.py {Output File Path} "{Starting Page Name}", {Maximum depth (-1 for no limit)}\nHalt process and save cut Ctrl+C.')
     exit(-1)
 
 pagesQueue.append((startingPage,0))

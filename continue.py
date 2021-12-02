@@ -11,7 +11,7 @@ nodeDictionary = {}
 args = sys.argv[1:]
 
 if len(args) < 2:
-    print('Usage: python .\continue {Graph File Path} {Maximum depth (-1 for no limit)}\nHalt process and save with Ctrl+C.')
+    print('Usage: python continue.py {Graph File Path} {Maximum depth (-1 for no limit)}\nHalt process and save with Ctrl+C.')
     exit(-1)
 
 filePath = args[0]
@@ -21,7 +21,7 @@ try:
     maxDepth = int(maxDepth)
 except:
     print("Invalid depth given.")
-    print('Usage: python .\continue {Output File Path} {Maximum depth (-1 for no limit)}\nHalt process and save with Ctrl+C.')
+    print('Usage: python continue.py {Output File Path} {Maximum depth (-1 for no limit)}\nHalt process and save with Ctrl+C.')
     exit(-1)
 
 # Re-read categories file to find known nodes

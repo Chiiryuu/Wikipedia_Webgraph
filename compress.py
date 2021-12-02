@@ -5,7 +5,7 @@ args = sys.argv[1:]
 
 # If not enough arguments given, 
 if len(args) < 3:
-    print('Usage: python .\compress {Input File} {Output File} {Max Depth}')
+    print('Usage: python compress.py {Input File} {Output File} {Max Depth}')
     exit(-1)
 
 # Get max depth from args
@@ -17,7 +17,7 @@ outputFileName = args[1]
 try:
     maxDepth = int(args[2])
 except:
-    print('Usage: python .\compress {Input File} {Output File} {Max Depth}')
+    print('Usage: python compress.py {Input File} {Output File} {Max Depth}')
     exit(-1)
 
 # Open original and compressed graph file

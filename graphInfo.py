@@ -55,7 +55,7 @@ args = sys.argv[1:]
 
 # If not enough arguments given, 
 if len(args) < 1:
-    print('Usage: python .\graphInfo {Input File}')
+    print('Usage: python graphInfo.py {Input File}')
     exit(-1)
 
 graphFile = args[0]
