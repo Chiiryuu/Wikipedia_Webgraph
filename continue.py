@@ -41,7 +41,6 @@ for line in uncompletedNodeFile:
     pagesQueue.append((nodeName,depth))
 uncompletedNodeFile.close()
 
-
 print("Querying Wikipedia...")
 
 curDepth = -1
@@ -49,6 +48,7 @@ curDepth = -1
 try:
     while len(pagesQueue) > 0:
         pageName, pageDepth = pagesQueue.pop(0)
+        pageName = pageName.strip().replace('\n','')
         if (maxDepth > -1 and pageDepth > maxDepth):
             print("Max breadth depth reached!")
             break
