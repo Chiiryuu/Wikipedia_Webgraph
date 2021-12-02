@@ -10,28 +10,29 @@ nodeDictionary = {}
 
 args = sys.argv[1:]
 
-if len(args) < 1:
-    print('Usage: python .\continue {Maximum depth (-1 for no limit)}\nHalt process and save with Ctrl+C.')
+if len(args) < 2:
+    print('Usage: python .\continue {Graph File Path} {Maximum depth (-1 for no limit)}\nHalt process and save with Ctrl+C.')
     exit(-1)
 
-maxDepth = args[0]
+filePath = args[0]
+maxDepth = args[1]
 
 try:
     maxDepth = int(maxDepth)
 except:
     print("Invalid depth given.")
-    print('Usage: python .\continue {Maximum depth (-1 for no limit)}\nHalt process and save with Ctrl+C.')
+    print('Usage: python .\continue {Output File Path} {Maximum depth (-1 for no limit)}\nHalt process and save with Ctrl+C.')
     exit(-1)
 
 # Re-read categories file to find known nodes
-knownNodeFile = open('categories.csv','r')
+knownNodeFile = open('categories-'+filePath,'r')
 for line in knownNodeFile:
     nodeName = line.split(':')[0]
     knownPages.append(knownNodeFile)
 knownNodeFile.close()
 
 
-uncompletedNodeFile = open('UncompletedNodes.csv','r')
+uncompletedNodeFile = open('UncompletedNodes-'+filePath,'r')
 for line in uncompletedNodeFile:
     nodeName, depth = line.split(':')
     depth = int(depth)
@@ -40,11 +41,9 @@ for line in uncompletedNodeFile:
 uncompletedNodeFile.close()
 
 
-
 print("Querying Wikipedia...")
 
 curDepth = -1
-
 
 try:
     while len(pagesQueue) > 0:
@@ -56,11 +55,12 @@ try:
         if (pageDepth > curDepth):
             curDepth += 1
             print("Current Depth:",curDepth)
+        
         pageEdges = []
         page = pywikibot.Page(site, pageName)
         pages = page.linkedPages()
         
-        pageCategories = open("categories.csv", 'a')
+        pageCategories = open("categories-"+filePath, 'a')
         categories = page.categories()
         categoryString = "{}:".format(pageName)
         for category in categories:
@@ -68,7 +68,7 @@ try:
         pageCategories.write(categoryString[:-1]+'\n')
         pageCategories.close()
         
-        graph = open("Graph.csv", 'a')
+        graph = open(filePath, 'a')
         for relatedPage in pages:
             newPage = relatedPage.title()
             if (':' in newPage):
@@ -85,12 +85,10 @@ except KeyboardInterrupt:
 except:
     print("Error processing node")
     
-with open("UncompletedNodes.csv", 'w') as file:
+with open("UncompletedNodes-"+filePath, 'w') as file:
     for element in pagesQueue:
         file.write("{}:{}\n".format(element[0],element[1]))
     file.close()
 
 print("Production Completed")
-
-
 
